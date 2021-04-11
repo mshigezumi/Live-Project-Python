@@ -24,11 +24,68 @@ The delete page is a confirmation that the user wants to delete the selected ent
 ### List
 The list page was created and improved over a few stories, it contains the majority of the functionality created during the live project. It shows a list of the tanks which are in the database with some basic information and sorting functionality provided by sorttable.js. Each entry has a link to the individual details page of the tank. This page also has the selection menu to use the API and web scraping functions, these can be easily moved to a more intuitive or convenient location.
 
+~~~
+{% extends "tanks/base.html" %}
+
+{% block title %}Modern Tanks of the World List{% endblock %}
+
+{% block header %}List{% endblock %}
+
+{% block content %}
+
+<table class="sortable">
+    <tr class="sticky-row">
+        <th>Name:</th>
+        <th>Country:</th>
+        <th>Generation:</th>
+        <th>Entered Service In:</th>
+    </tr>
+    {% for tank in tanks %}
+    <tr>
+        <td rowspan="1"><a href="../{{ tank.pk }}/details">{{ tank.name }}</a></td>
+        <td rowspan="1">{{ tank.country|title }}</td>
+        <td rowspan="1">{{ tank.generation }}</td>
+        <td rowspan="1">{{ tank.year }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<div class="search-abstract">
+    <h3>Search DBpedia for abstract on Tank</h3>
+    <form method="POST" action="{% url 'tanksAPI' %}">
+        <div class="form-object-container">
+            {% csrf_token %}
+            {{ namesForm.non_field_errors }}
+            {{ namesForm.as_p }}
+        </div>
+        <div class="form-button-container">
+            <input type="submit" class="button" value="Search">
+        </div>
+    </form>
+</div>
+<br>
+<div class="search-article">
+    <h3>Search www.militaryfactory.com for article on Tank</h3>
+    <form method="POST" action="{% url 'tanksSoup' %}">
+        <div class="form-object-container">
+            {% csrf_token %}
+            {{ idForm.non_field_errors }}
+            {{ idForm.as_p }}
+        </div>
+        <div class="form-button-container">
+            <input type="submit" class="button" value="Search">
+        </div>
+    </form>
+</div>
+
+{% endblock %}
+~~~
+
 ### Details
 The details pages, one for each entry, contains all the releveant data from the database in a table format. 
 
 ### API
-The API functionality was done over two stories, this was the hardest of the stories I did on this project. It searches DBpedia (a project aiming to extract structured content from the information created in the Wikipedia project) for an abstract of the selected tank in english. This was much more complex than I originally expected since the DBpedia response returned way more information than I was expecting (many different types of information with most in multiple languages) with no easy way to limit it so I had to get creative to get the information that I wanted. I even needed to find a script to help extract specified values from a very complex JSON response into a list.
+The API functionality was done over two stories, this was the hardest of the stories I did on this project. It searches DBpedia (a project aiming to extract structured content from the information created in the Wikipedia project) for an abstract of the selected tank in english. This was much more complex than I originally expected since the DBpedia response returned way more information than I was expecting (many different types of information with most in multiple languages) with no easy way to limit it so I had to get creative to get the information that I wanted. I even needed to find a script to help extract specified values from a very complex JSON response into a list. I had to extract two seperate lists due to how the infomration was stored, one for the values themselves and one for the xml:lang tag which indicated which language the value was in. From there some excess information was sorted out and the two lists were combined into a dictonary so the correct key value pair could be selected and returned to the API page.
 
 ~~~
 def tanksAPI(request):
@@ -52,262 +109,23 @@ def tanksAPI(request):
 ~~~
 
 ### Web Scraping
-
-
-
-
-### BlogPost Create/Edit Pages
-Two seperate stories included these pages, first was creating and scafolding the CRUD pages, second was styling and implementing the basic functionality of the create and edit pages. Both of these pages are very similar so they were part of the same stories.
+The web scraping functionality was done over two stories, it uses Beautiful Soup 4. For this example of web scraping I took articles off of www.militaryfactory.com and displayed their main content onto the soup page. Finding the correct combination of methods to remove all the formating and tags besides the newline characters from the repsonse was tedious. In the end it was finding all the spans with a specific class, putting those results into a list, and using the get_text() method on the span I wanted extractred the text I wanted from the response.
 
 ~~~
-<div class="blog-post-div">
-    <h2 class="blog-post-header">Edit Blog Post</h2>
-</div>
-
-@using (Html.BeginForm("Edit", "BlogPost", FormMethod.Post, new { @class = "blog-post-form" }))
-{
-    @Html.AntiForgeryToken()
-
-    <div class="form-horizontal">
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.BlogPostId)
-
-        <div class="blog-post-form-group">
-            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label" })
-            <div class="blog-post-div">
-                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control blog-post-input" } })
-                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="blog-post-form-group">
-            @Html.LabelFor(model => model.Content, htmlAttributes: new { @class = "control-label" })
-            <div class="blog-post-div">
-                <!-- this should probably be a text field instead so it's easier to write/edit the text of the blog post -->
-                @Html.EditorFor(model => model.Content, new { htmlAttributes = new { @class = "form-control blog-post-input" } })
-                @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="blog-post-form-group">
-            @Html.LabelFor(model => model.Posted, htmlAttributes: new { @class = "control-label" })
-            <div class="blog-post-div">
-                @Html.EditorFor(model => model.Posted, new { htmlAttributes = new { @class = "form-control blog-post-input" } })
-                @Html.ValidationMessageFor(model => model.Posted, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="blog-post-form-group">
-            @Html.LabelFor(model => model.Author, htmlAttributes: new { @class = "control-label" })
-            <div class="blog-post-div">
-                @Html.EditorFor(model => model.Author, new { htmlAttributes = new { @class = "form-control blog-post-input" } })
-                @Html.ValidationMessageFor(model => model.Author, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="col-md-10 blog-post-div">
-            <input type="submit" value="Save" class="btn btn-default blog-post-button blog-post-spacer" />
-        </div>
-
-        <div class="blog-post-div col-md-10">
-            @Html.ActionLink("Back", "Index", null, new { @class = "btn btn-default blog-post-button2" })
-        </div>
-    </div>
-}
+def tanksSoup(request):
+    if request.method == "POST":
+        id = request.POST['id'] # gets the id attribute from the idForm that is passed through list
+        response = requests.get('https://www.militaryfactory.com/armor/detail.asp?armor_id=' + id)
+        soup = BeautifulSoup(response.content, 'html.parser') # passes response through beautifulsoup
+        content = soup.find_all('span', class_='textLarge') # finds all the span tags with the class textLarge, puts them into a list
+        # would need for loop here if I wanted multiple content items printed
+        text = content[0].get_text() # content[0] is the span I want to get the text from
+        # print(list(content[0].stripped_strings))
+        print(text)
+        if response:
+            return render(request, 'tanks/soup.html', {"soup": text}) # returns the extracted text
+        else:
+            return render(request, 'tanks/soup.html', {"soup": response.status_code})  # 400 if it doesn't work
+    else:
+        return redirect('tanksList')
 ~~~
-
-### BlogPost Index Page
-Three seperate stories included this page, first was creating and scafolding the CRUD pages, second was styling and implementing the basic functionality of the index page (showing the blog posts, getting buttons to work), third was styling and implementing a confirm delete modal and an alert with javascript/jQuery for extra funcationality.
-
-~~~
-<!-- Alert -->
-<div class="blog-post-div blog-post-alert">
-    <div class="alert alert-success blog-post-alert-text blog-post-spacer2 blog-post-alert-fade" id="alert">
-        The blog post was deleted successfully <i class="fas fa-check"></i>
-    </div>
-</div>
-
-<div class="blog-post-div">
-    <h2 class="blog-post-header">Blog Post Index</h2>
-</div>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-
-<!-- Blog Posts -->
-@foreach (var item in Model)
-{
-    <div class="blog-post-card-container" id="@item.BlogPostId">
-        <div class="card blog-post-card">
-            <div class="row no-gutters">
-                <div class="blog-post-card-thumbnail">
-                    <img src="https://picsum.photos/500" class="img-fluid " alt="">
-                </div>
-                <div class="col px-2 blog-post-flexbox flex-column">
-                    <div class="blog-post-card-text-container">
-                        <h4 class="blog-post-card-title">@Html.DisplayFor(modelItem => item.Title)</h4>
-                        <p class="text-muted">@Html.DisplayFor(modelItem => item.Posted) by @Html.DisplayFor(modelItem => item.Author)</p>
-                        <p class="card-text blog-post-spacer2">@Html.DisplayFor(modelItem => item.Content)</p>
-                    </div>
-                    <div class="blog-post-card-button-container">
-                        <a href="@Url.Action("Edit", new { id = item.BlogPostId })" class="btn blog-post-button"><i class="fas fa-edit"></i> Edit</a>
-                        <a href="@Url.Action("Details", new { id = item.BlogPostId })" class="btn blog-post-button"><i class="fas fa-info"></i> Details</a>
-                        <button type="button" class="btn blog-post-button2" data-toggle="modal" data-target="#confirmDelete" data-item-id="@item.BlogPostId" data-item-title="@item.Title"><i class="fas fa-trash"></i> Delete</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-}
-
-<!-- Modal -->
-<div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content blog-post-modal-content">
-            <div class="modal-header blog-post-modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Delete this Blog Post?</h5>
-                <button type="button" class="close blog-post-close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                Are you sure you want to delete: <span class="title"></span>
-            </div>
-            <div class="modal-footer blog-post-modal-footer">
-                <button type="button" class="btn blog-post-button" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn blog-post-button2" id="deleteButton">Delete</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script type="text/javascript">
-    function gettoken() {
-        var token = '@Html.AntiForgeryToken()';
-        token = $(token).val();
-        return token;
-    }
-    function showAlert() {
-        $('#alert').addClass('in');
-    }
-    function hideAlert() {
-        $('#alert').removeClass('in');
-    }
-    $('#confirmDelete').on('click', '#deleteButton', function (e) {
-        var $modalDiv = $(e.delegateTarget);
-        var id = $(this).data('itemId');
-        var $postDiv = $('#' + id);
-        $.ajax({ url: '/Blog/BlogPost/Delete/' + id, type: 'POST', data: {__RequestVerificationToken: gettoken()}})
-        $postDiv.addClass('blog-post-hide');
-        $modalDiv.modal('hide');
-        showAlert();
-        setTimeout(function () {
-            hideAlert();
-        }, 3000)
-    });
-    $('#confirmDelete').on('show.bs.modal', function (e) {
-        var data = $(e.relatedTarget).data();
-        $('.title', this).text(data.itemTitle);
-        $('#deleteButton', this).data('itemId', data.itemId);
-    });
-</script>
-~~~
-
-### BlogPost Details/Delete Pages
-Two seperate stories included these pages, first was creating and scafolding the CRUD pages, second was styling and implementing the basic functionality of the details and delete pages. Both of these pages are very similar so they were part of the same stories.
-
-~~~
-<div class="blog-post-div">
-    <h2 class="blog-post-header">Delete this Blog Post?</h2>
-</div>
-
-<div class="blog-post-card-container">
-    <div class="card blog-post-card">
-        <div class="no-gutters">
-            <div class="blog-post-div">
-                <h4 class="blog-post-spacer">@Html.DisplayFor(model => model.Title)</h4>
-                <div class="blog-post-card-image">
-                    <img src="https://picsum.photos/500" class="img-fluid " alt="">
-                </div>
-            </div>
-            <div class="blog-post-spacer2">
-                <div class="blog-post-card-text-container2">
-                    <p class="text-muted">by @Html.DisplayFor(model => model.Author)</p>
-                    <p class="text-muted">@Html.DisplayFor(model => model.Posted)</p>
-                    <p class="card-text blog-post-spacer2">@Html.DisplayFor(model => model.Content)</p>
-                </div>
-                <div class="row blog-post-card-button-container2">
-                    <div class="col-8 blog-post-card-button-container-left blog-post-no-padding">
-                        <!-- need to find way to make this look good on mobile too -->
-                        <a href="@Url.Action("Index", new {  })" class="btn blog-post-button3 col-4"><i class="fas fa-chevron-left"></i> Back</a>
-                        <a href="@Url.Action("Edit", new { id = Model.BlogPostId })" class="btn blog-post-button3 col-4"><i class="fas fa-edit"></i> Edit</a>
-                    </div>
-                    <div class="col-4 blog-post-card-button-container-right blog-post-no-padding">
-                        <!-- need to find way to make this look good on mobile too -->
-                        @using (Html.BeginForm())
-                        {
-                            @Html.AntiForgeryToken()
-                            <button type="submit" class="btn blog-post-button4 col-8"><i class="fas fa-trash"></i> Delete</button>
-                        }
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-~~~
-
-### Blog.css
-The CSS used for all these files is stored in the Blog.css file, this in combination with Bootstrap 4 styled the BlogPost pages to the required specifications.
-
-~~~
-.blog-post-modal-content {
-    background-color: #333333;
-    border: 0;
-    box-shadow: 0px 0px 0.5rem var(--dark-color);
-}
-
-.blog-post-modal-header {
-    border-bottom: 0;
-}
-
-.blog-post-close {
-    color: var(--light-color);
-    text-shadow: 0px 0px 0.5rem var(--dark-color);
-}
-
-.blog-post-modal-footer {
-    border-top: 0;
-}
-
-.blog-post-hide {
-    display: none;
-}
-
-.blog-post-alert {
-    position: fixed;
-    z-index: 999;
-    width: 50%;
-    left: 50%;
-    transform: translate(-50%);
-}
-
-.blog-post-alert-text {
-    font-weight: bold;
-    text-align: center;
-}
-
-.blog-post-alert-fade {
-    opacity: 0;
-    -webkit-transition: opacity 0.25s linear;
-    transition: opacity 0.25s linear;
-}
-
-.blog-post-alert-fade.in {
-    opacity: 1;
-}
-~~~
-
-### Other Stories
-I also worked on a few other stories, including creating and scafolding the model and CRUD pages for BlogPost, making the rental area dropdown for the navbar, and working on creating and seeding the PostMaster for BlogPost.
