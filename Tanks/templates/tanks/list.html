@@ -1,0 +1,76 @@
+{% extends "tanks/base.html" %}
+
+{% block title %}Modern Tanks of the World List{% endblock %}
+
+{% block header %}List{% endblock %}
+
+<!--
+tanksList = [
+{% for tank in tanks %}
+    'name: {{ tank.name }}', ['country: {{ tank.country }}', 'generation: {{ tank.generation }}', 'year: {{ tank.year }}'],
+{% endfor %}
+]
+-->
+
+<!--
+tanksList = [
+        'name: {{ tank.name }}', ['country: {{ tank.country }}','generation: {{ tank.generation }}','year: {{ tank.year }}'],
+        'tank2', ['country','generation','year'],
+        'tank3', ['country','generation','year'],
+]
+-->
+
+{% block content %}
+
+<table class="sortable">
+    <tr class="sticky-row">
+        <th>Name:</th>
+        <th>Country:</th>
+        <th>Generation:</th>
+        <th>Entered Service In:</th>
+    </tr>
+    {% for tank in tanks %}
+    <tr>
+        <td rowspan="1"><a href="../{{ tank.pk }}/details">{{ tank.name }}</a></td>
+        <td rowspan="1">{{ tank.country|title }}</td>
+        <td rowspan="1">{{ tank.generation }}</td>
+        <td rowspan="1">{{ tank.year }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<div class="search-abstract">
+    <h3>Search DBpedia for abstract on Tank</h3>
+    <form method="POST" action="{% url 'tanksAPI' %}">
+        <div class="form-object-container">
+            {% csrf_token %}
+            {{ namesForm.non_field_errors }}
+            {{ namesForm.as_p }}
+        </div>
+        <div class="form-button-container">
+            <input type="submit" class="button" value="Search">
+        </div>
+    </form>
+</div>
+<br>
+<div class="search-article">
+    <h3>Search www.militaryfactory.com for article on Tank</h3>
+    <form method="POST" action="{% url 'tanksSoup' %}">
+        <div class="form-object-container">
+            {% csrf_token %}
+            {{ idForm.non_field_errors }}
+            {{ idForm.as_p }}
+        </div>
+        <div class="form-button-container">
+            <input type="submit" class="button" value="Search">
+        </div>
+    </form>
+</div>
+
+<!--
+<ul>
+    {{ tanksList|unordered_list }}
+</ul>
+-->
+
+{% endblock %}

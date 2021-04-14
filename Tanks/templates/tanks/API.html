@@ -1,0 +1,14 @@
+{% extends "tanks/base.html" %}
+
+{% block title %}Modern Tanks of the World API{% endblock %}
+
+{% block header %}API{% endblock %}
+
+{% block content %}
+
+{{ data|linebreaksbr }}
+<div class="form-button-container">
+    <a href="{% url 'tanksList' %}"><button type="button" class="botton">Back</button></a>
+</div>
+
+{% endblock %}

@@ -1,0 +1,99 @@
+{% extends "tanks/base.html" %}
+
+{% block title %}Modern Tanks of the World Details{% endblock %}
+
+{% block header %}Details{% endblock %}
+
+{% block content %}
+
+<table>
+    <tr>
+        <th>Name:</th>
+        <td>{{ tank.name }}</td>
+
+    </tr>
+    <tr>
+        <th>Country:</th>
+        <td>{{ tank.country|title }}</td>
+    </tr>
+    <tr>
+        <th>Generation:</th>
+        <td>{{ tank.generation }}</td>
+    </tr>
+    <tr>
+        <th>Entered Service In:</th>
+        <td>{{ tank.year }}</td>
+    </tr>
+    <tr>
+        <th>Weight:</th>
+        <td>{{ tank.weight }}</td>
+    </tr>
+    <tr>
+        <th>Crew:</th>
+        <td>{{ tank.crew }}</td>
+    </tr>
+    <tr>
+        <th>Main Armament:</th>
+        <td>{{ tank.main_armament }}</td>
+    </tr>
+    <tr>
+        <th>Rounds:</th>
+        <td>{{ tank.rounds }}</td>
+    </tr>
+    <tr>
+        <th>Autoloader:</th>
+        <td>{{ tank.autoloader|yesno:"Yes,No" }}</td>
+    </tr>
+    <tr>
+        <th>Secondary Armaments:</th>
+        <td>{{ tank.secondary_armaments }}</td>
+    </tr>
+    <tr>
+        <th>Remote Weapons System:</th>
+        <td>{{ tank.remote_weapons_system|yesno:"Yes,No" }}</td>
+    </tr>
+    <tr>
+        <th>Active Protection System:</th>
+        <td>{{ tank.active_protection_system|yesno:"Yes,No" }}</td>
+    </tr>
+    <tr>
+        <th>Engine:</th>
+        <td>{{ tank.engine }}</td>
+    </tr>
+    <tr>
+        <th>Power to Weight Ratio:</th>
+        <td>{{ tank.power_to_weight_ratio }}</td>
+    </tr>
+    <tr>
+        <th>Transmission:</th>
+        <td>{{ tank.transmission }}</td>
+    </tr>
+    <tr>
+        <th>Suspension:</th>
+        <td>{{ tank.suspension }}</td>
+    </tr>
+    <tr>
+        <th>Maximum speed:</th>
+        <td>{{ tank.maximum_speed }}</td>
+    </tr>
+    <tr>
+        <th>Range:</th>
+        <td>{{ tank.range }}</td>
+    </tr>
+    <tr>
+        <th>Length:</th>
+        <td>{{ tank.length }}</td>
+    </tr>
+    <tr>
+        <th>Width:</th>
+        <td>{{ tank.width }}</td>
+    <tr>
+        <th>Height:</th>
+        <td>{{ tank.height }}</td>
+    </tr>
+</table>
+<div class="form-button-container">
+    <a href="{% url 'tanksList' %}"><button type="button" class="botton">Back</button></a>
+</div>
+
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "tanks/base.html" %}
+
+{% block title %}Modern Tanks of the World{% endblock %}
+
+{% block header %}Modern Tanks of the World{% endblock %}
+
+{% block content %}
+<h2>Welcome to a page dedicated to modern tanks from around the world</h2> <!-- Might need to reposition this -->
+
+<!-- LIST -->
+<h3><a href="{% url 'tanksList' %}">LIST</a></h3>
+<p>The complete list of tanks which we have information on. Plus search functions for DBpedia and www.militaryfactory.com.</p>
+<!-- LIST -->
+
+<!-- GALLERY -->
+<h3><a href="{% url 'tanksGallery' %}">GALLERY</a></h3>
+<p>A gallery of modern tanks from around the world.</p>
+<!-- GALLERY END -->
+
+<!-- VIDEOS -->
+<h3><a href="{% url 'tanksVideos' %}">VIDEOS</a></h3>
+<p>A collection of videos relating to modern tanks and the technology behind them.</p>
+<!-- VIDEOS END -->
+
+<!-- CONTACT -->
+<h3><a href="{% url 'tanksContact' %}">CONTACT</a></h3>
+<p>Need to contact us? Send a message and we'll get back to you as soon as possible.</p>
+<!-- CONTACT END -->
+{% endblock %}

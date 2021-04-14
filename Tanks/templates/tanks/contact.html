@@ -1,0 +1,34 @@
+{% extends "tanks/base.html" %}
+
+{% block title %}Modern Tanks of the World Contact{% endblock %}
+
+{% block header %}Contact{% endblock %}
+
+{% block content %}
+
+<section id="contact">
+    <div class="contact">
+        <h2><span>Any tanks you would like us to add?</span>
+            <br/> Contact us right away!
+        </h2>
+        <p class="contact-text">
+            Please provide us with your basic contact information.
+        </p>
+        <div class="contact-form">
+            <form action="" method="post">
+                <input class="contact" type="text" value="" placeholder="First Name">
+                <input class="contact" type="text" value="" placeholder="Last Name">
+                <input class="contact" type="text" value="" placeholder="Email Address">
+                <input class="contact" type="text" value="" placeholder="Phone Number">
+                <div class="form-spacer">
+                    <label class="terms">Terms and Conditions</label>
+                </div>
+                <div class="submit">
+                    <input type="submit" value="Submit">
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

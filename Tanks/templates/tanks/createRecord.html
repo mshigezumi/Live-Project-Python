@@ -1,0 +1,23 @@
+{% extends "tanks/base.html" %}
+
+{% block title %}Modern Tanks of the World Create{% endblock %}
+
+{% block header %}Create A New Tank:{% endblock %}
+
+{% block content %}
+
+<div class="admin-panel">
+    <form method="POST" action="{% url 'tanksCreate' %}">
+        <div class="form-object-container">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+            {{ form.as_p }}
+        </div>
+        <div class="form-button-container">
+            <input type="submit" class="button" value="Create New Tank" name="Save_Item"> <!-- I don't know if name is right -->
+            <a href="{% url 'tanksAdmin' %}"><button type="button" class="botton" value="Cancel">Cancel</button></a>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

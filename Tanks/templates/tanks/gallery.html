@@ -1,0 +1,199 @@
+{% extends "tanks/base.html" %}
+
+{% load static %}
+
+{% block title %}Modern Tanks of the World Gallery{% endblock %}
+
+{% block header %}Gallery{% endblock %}
+
+{% block content %}
+
+<section id="gallery">
+    <div class="flex-container">
+
+        <!-- PHOTO-CONTAINER 1 -->
+        <div class="photo-container"> <!-- Can I make this modular? Would probably need it  to be [tank] -> [modual] -> [page location] -->
+            <div class="photo">
+                <img src="{% static 'images/tanks/merkava.jpg' %}" alt="Merkava Mk 4M Windbreaker">
+                <div class="photo-overlay" onclick="openModal();currentSlide(1)">
+                    <h3 class="white-head">Click to Enlarge</h3>
+                    <p>Israel's Merkava Mk 4M Windbreaker</p>
+                </div>
+            </div>
+        </div>
+        <!-- END PHOTO-CONTAINER 1 -->
+
+        <!-- PHOTO-CONTAINER 2 -->
+        <div class="photo-container">
+            <div class="photo">
+                <img src="{% static 'images/tanks/type99.jpg' %}" alt="Type 99A">
+                <div class="photo-overlay" onclick="openModal();currentSlide(2)">
+                    <h3 class="white-head">Click to Enlarge</h3>
+                    <p>China's Type 99A</p>
+                </div>
+            </div>
+        </div>
+        <!-- END PHOTO-CONTAINER 2 -->
+
+        <!-- PHOTO-CONTAINER 3 -->
+        <div class="photo-container">
+            <div class="photo">
+                <img src="{% static 'images/tanks/leopard2.jpg' %}" alt="Leopard 2A7+">
+                <div class="photo-overlay" onclick="openModal();currentSlide(3)">
+                    <h3 class="white-head">Click to Enlarge</h3>
+                    <p>Germany's Leopard 2A7+</p>
+                </div>
+            </div>
+        </div>
+        <!-- END PHOTO-CONTAINER 3 -->
+
+        <!-- PHOTO-CONTAINER 4 -->
+        <div class="photo-container">
+            <div class="photo">
+                <img src="{% static 'images/tanks/abrams.jpg' %}" alt="M1A2C SEPv3 Abrams">
+                <div class="photo-overlay" onclick="openModal();currentSlide(4)">
+                    <h3 class="white-head">Click to Enlarge</h3>
+                    <p>United States of America's M1A2C SEPv3 Abrams</p>
+                </div>
+            </div>
+        </div>
+        <!-- END PHOTO-CONTAINER 4 -->
+
+        <!-- PHOTO-CONTAINER 5 -->
+        <div class="photo-container">
+            <div class="photo">
+                <img src="{% static 'images/tanks/challenger2.jpg' %}" alt="Challenger 2 LEP">
+                <div class="photo-overlay" onclick="openModal();currentSlide(5)">
+                    <h3 class="white-head">Click to Enlarge</h3>
+                    <p>United Kingdom's Challenger 2 LEP</p>
+                </div>
+            </div>
+        </div>
+        <!-- END PHOTO-CONTAINER 5 -->
+
+        <!-- PHOTO-CONTAINER 6 -->
+        <div class="photo-container">
+            <div class="photo">
+                <img src="{% static 'images/tanks/leclerc.jpg' %}" alt="Leclerc XLR">
+                <div class="photo-overlay" onclick="openModal();currentSlide(6)">
+                    <h3 class="white-head">Click to Enlarge</h3>
+                    <p>France's Leclerc XLR</p>
+                </div>
+            </div>
+        </div>
+        <!-- END PHOTO-CONTAINER 6 -->
+
+        <!-- PHOTO-CONTAINER 7 -->
+        <div class="photo-container">
+            <div class="photo">
+                <img src="{% static 'images/tanks/type10.jpg' %}" alt="Type 10">
+                <div class="photo-overlay" onclick="openModal();currentSlide(7)">
+                    <h3 class="white-head">Click to Enlarge</h3>
+                    <p>Japan's Type 10</p>
+                </div>
+            </div>
+        </div>
+        <!-- END PHOTO-CONTAINER 7 -->
+
+        <!-- PHOTO-CONTAINER 8 -->
+        <div class="photo-container">
+            <div class="photo">
+                <img src="{% static 'images/tanks/blackpanther.jpg' %}" alt="K2 PIP Black Panther">
+                <div class="photo-overlay" onclick="openModal();currentSlide(8)">
+                    <h3 class="white-head">Click to Enlarge</h3>
+                    <p>South Korea's K2 PIP Black Panther</p>
+                </div>
+            </div>
+        </div>
+        <!-- END PHOTO-CONTAINER 8 -->
+
+        <!-- PHOTO-CONTAINER 9 -->
+        <div class="photo-container">
+            <div class="photo">
+                <img src="{% static 'images/tanks/armata.jpg' %}" alt="T-14 Armata">
+                <div class="photo-overlay" onclick="openModal();currentSlide(9)">
+                    <h3 class="white-head">Click to Enlarge</h3>
+                    <p>Russia's T-14 Armata</p>
+                </div>
+            </div>
+        </div>
+        <!-- END PHOTO-CONTAINER 9 -->
+    </div>
+
+    <!-- MODAL -->
+
+    <div id="modal" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <div class="modal-content">
+
+            <div class="slides">
+                <div class="numbertext">1 / 9</div>
+                <img class="slide-photo" src="{% static 'images/tanks/merkava.jpg' %}" alt="Merkava Mk 4M Windbreaker"> <!-- set to width 100% -->
+            </div>
+
+            <div class="slides">
+                <div class="numbertext">2 / 9</div>
+                <img class="slide-photo" src="{% static 'images/tanks/type99.jpg' %}" alt="Type 99A">
+            </div>
+
+            <div class="slides">
+                <div class="numbertext">3 / 9</div>
+                <img class="slide-photo" src="{% static 'images/tanks/leopard2.jpg' %}" alt="Leopard 2A7+">
+            </div>
+
+            <div class="slides">
+                <div class="numbertext">4 / 9</div>
+                <img class="slide-photo" src="{% static 'images/tanks/abrams.jpg' %}" alt="M1A2C SEPv3 Abrams">
+            </div>
+
+            <div class="slides">
+                <div class="numbertext">5 / 9</div>
+                <img class="slide-photo" src="{% static 'images/tanks/challenger2.jpg' %}" alt="Challenger 2 LEP">
+            </div>
+
+            <div class="slides">
+                <div class="numbertext">6 / 9</div>
+                <img class="slide-photo" src="{% static 'images/tanks/leclerc.jpg' %}" alt="Leclerc XLR">
+            </div>
+
+            <div class="slides">
+                <div class="numbertext">7 / 9</div>
+                <img class="slide-photo" src="{% static 'images/tanks/type10.jpg' %}" alt="Type 10">
+            </div>
+
+            <div class="slides">
+                <div class="numbertext">8 / 9</div>
+                <img class="slide-photo" src="{% static 'images/tanks/blackpanther.jpg' %}" alt="K2 PIP Black Panther">
+            </div>
+
+            <div class="slides">
+                <div class="numbertext">9 / 9</div>
+                <img class="slide-photo" src="{% static 'images/tanks/armata.jpg' %}" alt="T-14 Armata">
+            </div>
+
+            <a class="prev" onclick="changeSlide(-1)">&#10094;</a>
+            <a class="next" onclick="changeSlide(1)">&#10095;</a>
+
+            <div class="caption-container">
+                <p id="caption"></p>
+            </div>
+
+            <div class="modal-flexbox"> <!-- something here isn't working as the javascript doesn't change the display to block -->
+                <img class="thumbnail" onclick="currentSlide(1)" src="{% static 'images/tanks/merkava.jpg' %}" alt="Israel's Merkava Mk 4M Windbreaker">
+                <img class="thumbnail" onclick="currentSlide(2)" src="{% static 'images/tanks/type99.jpg' %}" alt="China's Type 99A">
+                <img class="thumbnail" onclick="currentSlide(3)" src="{% static 'images/tanks/leopard2.jpg' %}" alt="Germany's Leopard 2A7+">
+                <img class="thumbnail" onclick="currentSlide(4)" src="{% static 'images/tanks/abrams.jpg' %}" alt="United States of America's M1A2C SEPv3 Abrams">
+                <img class="thumbnail" onclick="currentSlide(5)" src="{% static 'images/tanks/challenger2.jpg' %}" alt="United Kingdom's Challenger 2 LEP">
+                <img class="thumbnail" onclick="currentSlide(6)" src="{% static 'images/tanks/leclerc.jpg' %}" alt="France's Leclerc XLR">
+                <img class="thumbnail" onclick="currentSlide(7)" src="{% static 'images/tanks/type10.jpg' %}" alt="Japan's Type 10">
+                <img class="thumbnail" onclick="currentSlide(8)" src="{% static 'images/tanks/blackpanther.jpg' %}" alt="South Korea's K2 PIP Black Panther">
+                <img class="thumbnail" onclick="currentSlide(9)" src="{% static 'images/tanks/armata.jpg' %}" alt="Russia's T-14 Armata">
+            </div>
+
+        </div>
+    </div>
+    <!-- MODAL END -->
+
+</section>
+
+{% endblock %}

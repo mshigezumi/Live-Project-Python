@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE HTML>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <title>
+            {% block title %}{% endblock %}
+        </title>
+        {% block tab-icon %}<link rel="icon" href="{% static 'images/icon.png' %}">{% endblock %}
+        {% block stylesheets %}
+            <!-- CHANGE FONTS!!!!!!!!!!! -->
+            <!--
+            <link href="https://fonts.googleapis.com/css?family=Oswald:400,700" rel="stylesheet">
+            <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
+            -->
+            <!-- External css -->
+            <!--
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+            -->
+            <!-- Internal css -->
+            <link rel="stylesheet" type="text/css" href="{% static 'CSS/layout.css' %}">
+        {% endblock %}
+        {% block scripts %}
+            <script type="text/javascript" src="{% static 'JS/sorttable.js' %}"></script>
+            <script type="text/javascript" src="{% static 'JS/modal.js' %}" defer></script>
+        {% endblock %}
+    </head>
+
+    <body>
+        <div class="page-container">
+            {% include "tanks/navbar.html" %}
+            <div id="home"> <!-- need this to be different for different pages, only want home to have the big picture and different formats for the others -->
+                <header class="header-title">
+                    <h1>{% block header %}{% endblock %}</h1>
+                </header>
+            </div>
+            <div class="content-container">
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+
+        {% include "tanks/footer.html" %}
+    </body>
+
+</html>

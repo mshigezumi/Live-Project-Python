@@ -1,0 +1,28 @@
+{% extends "tanks/base.html" %}
+
+{% block title %}Modern Tanks of the World Admin{% endblock %}
+
+{% block header %}Admin{% endblock %}
+
+{% block content %}
+
+<div class="admin-panel">
+    <form name="tankForm" method="POST" action="">
+        <div class="form-object">
+            {% csrf_token %}
+            <label for="menu-id">Select a tank from the list to edit:</label>
+            <select id="menu-id" name="menu" onChange="top.location.href=this.options[this.selectedIndex].value">
+                <option value="">--</option>
+                {% for tank in tanks %}
+                <option value="../{{ tank.pk }}/edit/">{{ tank.name }}</option>
+                {% endfor %}
+            </select>
+            <div class="form-button-container">
+                <a href="{% url 'tanksCreate' %}"><button type="button" class="button">Create New Tank</button></a>
+                <a href="{% url 'tanksHome' %}"><button type="button" class="button">Back</button></a>
+            </div>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

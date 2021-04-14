@@ -1,0 +1,24 @@
+{% extends "tanks/base.html" %}
+
+{% block title %}Modern Tanks of the World Edit{% endblock %}
+
+{% block header %}Edit A Tank:{% endblock %}
+
+{% block content %}
+
+<div class="admin-panel">
+    <form method="POST" id="this-form" action="../edit/">
+        <table>
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+            {{ form.as_table }}
+        </table>
+        <div class="form-button-container">
+            <input type="submit" class="button" value="Submit">
+            <a href="../{{ form.pk }}delete"><button type="button" class="botton">Delete</button></a> <!-- don't exactly know why the href is different from the others, no second / -->
+            <a href="{% url 'tanksAdmin' %}"><button type="button" class="botton">Cancel</button></a>
+        </div>
+    </form>
+</div>
+
+{% endblock %}
