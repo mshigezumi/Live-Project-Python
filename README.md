@@ -2,7 +2,7 @@
  
 ## Introduction:
 
-For the last two weeks with the Tech Academy I worked on a Live Project in Python which simulated a real world work environment in which I worked with my peers and staff to do work on a website, in this project we each worked on our own personal section of our choosing. We used Django with an MVC pattern in the create the website, sqlite3 was used as a database, and Beautiful Soup 4 was used for web scraping. My section is dedicated to modern tanks of the world, which is a successor to previous websites I made while learning HTML, CSS, and Javascript. Below are some code snippets of the stories I worked on, full code files are also available in this repository.
+For the last two weeks with the Tech Academy, I worked on a Live Project in Python which simulated a real-world work environment in which I worked with my peers and staff to do work on a website, in this project we each worked on our own personal section of our choosing. We used Django with an MVC pattern in the create the website, sqlite3 was used as a database, and Beautiful Soup 4 was used for web scraping. My section is dedicated to modern tanks of the world, which is a successor to previous websites I made while learning HTML, CSS, and Javascript. Below are some code snippets of the stories I worked on, full code files are also available in this repository.
 
 ## Pages and Stories:
 
